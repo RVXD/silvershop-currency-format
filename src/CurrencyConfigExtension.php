@@ -10,6 +10,7 @@ use SilverStripe\Forms\DropdownField;
 use SilverStripe\Forms\FieldList;
 use SilverStripe\Forms\ReadonlyField;
 use SilverStripe\ORM\FieldType\DBField;
+use SilverStripe\SiteConfig\SiteConfig;
 use Symfony\Component\Intl\Currencies;
 
 /**
@@ -27,6 +28,15 @@ class CurrencyConfigExtension extends Extension
         'BaseCurrency' => 'Varchar(3)',
         'CurrencyDisplay' => "Enum('symbol,narrowSymbol,code', 'symbol')",
     ];
+
+    /**
+     * Request-scoped cache of the resolved ['currency' => …, 'display' => …]. `SiteConfig::current_site_config()`
+     * is comparatively expensive (~100µs — it rebuilds a DataList each call) and prices render many times per page,
+     * so resolve once per request. Cleared whenever the SiteConfig is written (see {@link onAfterWrite()}).
+     *
+     * @var array{currency: string, display: string}|null
+     */
+    private static ?array $resolvedFormat = null;
 
     public function updateCMSFields(FieldList $fields): void
     {
@@ -88,6 +98,33 @@ class CurrencyConfigExtension extends Extension
         if ($chosen = (string) $this->getOwner()->BaseCurrency) {
             $currency = $chosen;
         }
+    }
+
+    /**
+     * The resolved shop currency + display style for this request, read from SiteConfig once and memoised.
+     *
+     * @return array{currency: string, display: string}
+     */
+    public static function resolveCurrencyFormat(): array
+    {
+        if (self::$resolvedFormat === null) {
+            $siteConfig = SiteConfig::current_site_config();
+            self::$resolvedFormat = [
+                'currency' => (string) $siteConfig->BaseCurrency,
+                'display' => (string) ($siteConfig->CurrencyDisplay ?: 'symbol'),
+            ];
+        }
+
+        return self::$resolvedFormat;
+    }
+
+    /**
+     * Invalidate the memoised format when the SiteConfig is saved (e.g. the merchant changes the currency), so the
+     * new value takes effect immediately — including between test cases that write SiteConfig.
+     */
+    public function onAfterWrite(): void
+    {
+        self::$resolvedFormat = null;
     }
 
     /**

@@ -6,7 +6,6 @@ namespace SilverShop\CurrencyFormat;
 
 use SilverShop\ORM\FieldType\ShopCurrency;
 use SilverStripe\i18n\i18n;
-use SilverStripe\SiteConfig\SiteConfig;
 use Symfony\Component\Intl\Currencies;
 
 /**
@@ -35,19 +34,14 @@ class LocaleCurrency extends ShopCurrency
             return parent::Nice();
         }
 
-        $siteConfig = SiteConfig::current_site_config();
-        $currency = (string) $siteConfig->BaseCurrency;
+        ['currency' => $currency, 'display' => $display] = CurrencyConfigExtension::resolveCurrencyFormat();
 
         // Nothing chosen: standard core formatting, byte-identical to a stock install.
         if ($currency === '') {
             return parent::Nice();
         }
 
-        $formatted = $this->formatWithCurrency(
-            abs((float) $this->value),
-            $currency,
-            (string) ($siteConfig->CurrencyDisplay ?: 'symbol')
-        );
+        $formatted = $this->formatWithCurrency(abs((float) $this->value), $currency, $display);
 
         if ($this->value < 0) {
             return sprintf(self::config()->get('negative_value_format'), $formatted);
