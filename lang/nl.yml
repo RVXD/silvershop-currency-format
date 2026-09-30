@@ -1,0 +1,12 @@
+nl:
+  SilverShop\CurrencyFormat\CurrencyConfigExtension:
+    BaseCurrency: 'Valuta'
+    BaseCurrencyDefault: 'Systeemstandaard ({currency})'
+    BaseCurrencyDesc: 'De basisvaluta van de shop. Laat leeg om de systeemstandaard te gebruiken (de base_currency YAML-configuratie).'
+    CurrencyDisplay: 'Valutaweergave'
+    CurrencyDisplayDesc: 'Hoe de valuta in prijzen wordt getoond. Alleen van toepassing wanneer hierboven een valuta is gekozen.'
+    DisplaySymbol: 'Symbool — landinstelling (bijv. US$, JP¥)'
+    DisplayNarrow: 'Kort symbool (bijv. $, ¥)'
+    DisplayCode: 'ISO-code (bijv. USD)'
+    CurrencyExample: 'Voorbeeld valutaweergave'
+    CurrencyExampleDesc: 'Een voorbeeldbedrag (1234,56) weergegeven met de valuta- en weergave-instellingen hierboven. Wordt bijgewerkt nadat je hebt opgeslagen.'

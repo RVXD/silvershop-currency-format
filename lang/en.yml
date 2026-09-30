@@ -1,0 +1,12 @@
+en:
+  SilverShop\CurrencyFormat\CurrencyConfigExtension:
+    BaseCurrency: 'Currency'
+    BaseCurrencyDefault: 'System default ({currency})'
+    BaseCurrencyDesc: 'The shop base currency. Leave blank to use the system default (the base_currency YAML config).'
+    CurrencyDisplay: 'Currency display'
+    CurrencyDisplayDesc: 'How the currency is shown in prices. Only applies when a currency is selected above.'
+    DisplaySymbol: 'Symbol — locale default (e.g. US$, JP¥)'
+    DisplayNarrow: 'Narrow symbol (e.g. $, ¥)'
+    DisplayCode: 'ISO code (e.g. USD)'
+    CurrencyExample: 'Currency display example'
+    CurrencyExampleDesc: 'A sample amount (1234.56) rendered with the currency and display settings above. Updates after you save.'

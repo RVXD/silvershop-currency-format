@@ -1,0 +1,18 @@
+---
+Name: silvershop-currency-format
+After:
+  - silvershop-fieldtypes
+  - silvershop-config
+---
+SilverStripe\SiteConfig\SiteConfig:
+  extensions:
+    - SilverShop\CurrencyFormat\CurrencyConfigExtension
+
+SilverStripe\Core\Injector\Injector:
+  # Format prices for the CMS-selected currency wherever prices render. Overriding both the `Currency` DBField cast
+  # and the concrete ShopCurrency service catches direct `ShopCurrency::create()` calls too (e.g. product price
+  # ranges). LocaleCurrency extends ShopCurrency, so it is a transparent drop-in.
+  Currency:
+    class: SilverShop\CurrencyFormat\LocaleCurrency
+  SilverShop\ORM\FieldType\ShopCurrency:
+    class: SilverShop\CurrencyFormat\LocaleCurrency

@@ -1,0 +1,12 @@
+fr:
+  SilverShop\CurrencyFormat\CurrencyConfigExtension:
+    BaseCurrency: 'Devise'
+    BaseCurrencyDefault: 'Valeur par défaut du système ({currency})'
+    BaseCurrencyDesc: 'La devise de base de la boutique. Laisser vide pour utiliser la valeur par défaut du système (la configuration YAML base_currency).'
+    CurrencyDisplay: 'Affichage de la devise'
+    CurrencyDisplayDesc: "Comment la devise est affichée dans les prix. Ne s'applique que lorsqu'une devise est sélectionnée ci-dessus."
+    DisplaySymbol: 'Symbole — par défaut de la locale (p. ex. US$, JP¥)'
+    DisplayNarrow: 'Symbole court (p. ex. $, ¥)'
+    DisplayCode: 'Code ISO (p. ex. USD)'
+    CurrencyExample: "Exemple d'affichage de la devise"
+    CurrencyExampleDesc: "Un montant d'exemple (1234,56) affiché avec les paramètres de devise et d'affichage ci-dessus. Mis à jour après l'enregistrement."
